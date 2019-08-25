@@ -1,0 +1,3 @@
+- Push this to git to save work
+- Open docker container with octave to complete exercies
+  - e.g. `docker run -v config:/config -v ~/machine_learning_coursera:/exercises --name coursera_ml_exercises -it octave`

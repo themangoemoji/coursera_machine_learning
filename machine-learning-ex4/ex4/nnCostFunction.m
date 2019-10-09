@@ -118,8 +118,8 @@ delta_1 = [s2' * a1];
 delta_2 = [s3' * a2];
 
 % Unregularized Gradient
-Theta1_grad = delta_1 ./ m;
-Theta2_grad = delta_2 ./ m;
+Theta1_grad = (delta_1 ./ m);
+Theta2_grad = (delta_2 ./ m);
 
 
 % Part 3: Implement regularization with the cost function and gradients.
@@ -130,7 +130,9 @@ Theta2_grad = delta_2 ./ m;
 %               and Theta2_grad from Part 2.
 %
 
-
+% Regularize non-bias terms
+Theta1_grad(:, 2:end) += (lambda / m) .* Theta1(:, 2:end);
+Theta2_grad(:, 2:end) += (lambda / m) .* Theta2(:, 2:end);
 
 % -------------------------------------------------------------
 

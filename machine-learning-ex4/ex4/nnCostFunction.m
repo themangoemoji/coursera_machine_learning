@@ -39,15 +39,18 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 %
-X_with_bias = [ones(m, 1), X]; % Add bias column: 401f x m
-second_activation = sigmoid(Theta1 * X_with_bias'); % Activators,FeatureWeights X Features,Samples = Activations,Samples
+X = [ones(m, 1), X]; % Add bias column: 401f x m
+%z2 = Theta1 * X'; % Activators,FeatureWeights X Features,Samples = Activations,Samples
 
-second_activation_with_bias = [ones(1, size(second_activation, 2)); second_activation];
-third_activation = sigmoid(Theta2 * second_activation_with_bias); % Outputs,ActivationWeights X Activations,Samples
+%a2 = sigmoid(z2);
+%a2 = [ones(m, 1), a2];
 
-Y = zeros(m, num_labels); % 5000 x 10 matrix to fill with classifier
-index_of_classifier = sub2ind(size(Y), 1:m, y');
-Y(index_of_classifier) = 1;
+%z3 = Theta2 * a2';
+%a3 = sigmoid(z3);
+
+%Y = zeros(m, num_labels); % 5000 x 10 matrix to fill with classifier
+%index_of_classifier = sub2ind(size(Y), 1:m, y');
+%Y(index_of_classifier) = 1;
 %   Y = [
 %   0   0   0   0   0   0   0   0   0   1
 %   0   0   0   0   0   0   0   0   0   1
@@ -67,13 +70,37 @@ Y(index_of_classifier) = 1;
 %   ]
 
 
-positive_error = Y' .* log(third_activation);  % Classifier,Sample .* Output,Sample = Y' .* third_activation = Classifier,Sample
-negative_error = (1-Y') .* log(1 - third_activation); % Classifier,Sample .* Prediction,Sample = Y' .* third_activation
-combined_unregularized_error = sum(sum(positive_error + negative_error)) * (-1 / m);
-J = combined_unregularized_error;
+%positive_error = Y' .* log(a3);  % Classifier,Sample .* Output,Sample = Y' .* a3 = Classifier,Sample
+%negative_error = (1-Y') .* log(1 - a3); % Classifier,Sample .* Prediction,Sample = Y' .* third_activation
+%combined_unregularized_error = sum(sum(positive_error + negative_error)) * (-1 / m);
+%J = combined_unregularized_error;
 
-% Add in regularization (thought it should be 0)
+%% Add in regularization (thought it should be 0)
 
+%regularization = lambda / (2 * m);
+%summations = sum(sum(Theta1(:, 2:end) .^ 2)); % Don't sum over the bias term
+%summations = summations + sum(sum(Theta2(:, 2:end) .^ 2)); % Don't sum over the bias term
+%regularization = regularization * summations;
+
+%J = combined_unregularized_error + regularization;
+
+%for t = 1:m
+    %x_t = X(1, :);
+    %y_t = y(1, :);
+
+    %% feedforward computing z2, a2, z3, a3
+    %z2_t = x_t * Theta1';
+    %a2_t = sigmoid(z2_t);
+    %a2_t = [1, a2_t];
+
+    %% third layer
+    %z3_t = a2_t * Theta2';
+    %a3_t = sigmoid(z3_t);
+
+    %delta_3_t = a3_t - y_t;
+
+
+%endfor
 
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
@@ -90,6 +117,48 @@ J = combined_unregularized_error;
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
+% We will create Y= [0 1 0
+%                    0 0 1
+%                    .....
+%                    1 0 0]
+% From y =         [2, 3,... 1]
+Identity_Matrix = eye(num_labels);
+Y = Identity_Matrix(y, :);
+
+% Feedforward
+z2 = X * Theta1';
+a2 = sigmoid(z2);
+a2 = [ones(m, 1), a2];
+
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+
+% Now, compute error
+positive_error = Y .* log(a3);  % Classifier,Sample .* Output,Sample = Y' .* a3 = Classifier,Sample
+negative_error = (1-Y) .* log(1 - a3); % Classifier,Sample .* Prediction,Sample = Y' .* third_activation
+combined_unregularized_error = sum(sum(positive_error + negative_error)) * (-1 / m);
+J = combined_unregularized_error;
+
+% Add in regularization (thought it should be 0)
+
+regularization = lambda / (2 * m);
+summations = sum(sum(Theta1(:, 2:end) .^ 2)); % Don't sum over the bias term
+summations = summations + sum(sum(Theta2(:, 2:end) .^ 2)); % Don't sum over the bias term
+regularization = regularization * summations;
+
+J = combined_unregularized_error + regularization;
+
+% Now, calculate sigmas
+s3 = a3 - Y;
+
+z2_with_bias = [ones(hidden_layer_size, 1), z2];
+s2 = s3 * Theta2 .* sigmoidGradient(z2_with_bias);
+
+% Compute Deltas
+%delta1 = s2 * 
+%s2 = Theta2' * s3
+keyboard();
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for

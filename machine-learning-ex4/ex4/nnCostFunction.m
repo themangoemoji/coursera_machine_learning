@@ -109,7 +109,7 @@ J = combined_unregularized_error + regularization;
 % Now, calculate sigmas
 s3 = a3 - Y;
 
-z2_with_bias = [ones(hidden_layer_size, 1), z2];
+z2_with_bias = [ones(size(z2, 1), 1), z2];
 s2 = s3 * Theta2 .* sigmoidGradient(z2_with_bias);
 s2 = s2(:, 2:end);
 

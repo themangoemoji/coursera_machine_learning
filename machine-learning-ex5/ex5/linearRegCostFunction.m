@@ -21,14 +21,22 @@ grad = zeros(size(theta));
 
 
 
+% Error
+errors = sum(((X * theta) - y) .^ 2);
+errors = errors ./ (2*m);
+
+theta_without_bias = theta;
+theta_without_bias(1,1) = 0;
+regularized_error = errors + (lambda * sum((theta_without_bias .^ 2 / (2 * m))));
+J = regularized_error;
 
 
-
-
-
-
-
-
+% Gradient
+gradient = (X' * ((X*theta) - y)) / m;
+theta_without_bias = theta;
+theta_without_bias(1,1) = 0;
+gradient += ((theta_without_bias * lambda) / m);
+grad = gradient;
 
 % =========================================================================
 

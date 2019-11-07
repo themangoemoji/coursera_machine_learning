@@ -42,6 +42,15 @@ error_val   = zeros(m, 1);
 %
 % Hint: You can loop over the examples with the following:
 %
+        error_train = []
+        error_val = []
+        theta = [theta] = trainLinearReg(X, y, lambda)
+
+        for i = 1:m
+            error_train = [error_train, X(i,:) * theta]
+            error_val = [error_val, Xval(i,:) * theta]
+        end
+        % TODO: errors_val & error_train are causing problems... maybe they need to be inverted?
 %       for i = 1:m
 %           % Compute train/cross validation errors using training examples 
 %           % X(1:i, :) and y(1:i), storing the result in 

@@ -15,10 +15,14 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
+% First create a matrix of [X, X, X, X..., X] (p times)
+X_poly = repmat(X, 1, p);
 
+% Create vector of powers that will map to each column of X_poly
+powers = [1:p];
 
-
-
+% Apply power to each column 
+X_poly = X_poly .^ powers;
 
 % =========================================================================
 

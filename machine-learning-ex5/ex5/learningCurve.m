@@ -14,12 +14,6 @@ function [error_train, error_val] = ...
 %   datasets, you might want to do this in larger intervals.
 %
 
-% Number of training examples
-m = size(X, 1);
-
-% You need to return these values correctly
-error_train = zeros(m, 1);
-error_val   = zeros(m, 1);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Fill in this function to return training errors in 
@@ -42,23 +36,17 @@ error_val   = zeros(m, 1);
 %
 % Hint: You can loop over the examples with the following:
 %
-        error_train = []
-        error_val = []
-        theta = [theta] = trainLinearReg(X, y, lambda)
+		m = size(X, 1);
+        error_train = [];
+        error_val = [];
 
         for i = 1:m
-            error_train = [error_train, X(i,:) * theta]
-            error_val = [error_val, Xval(i,:) * theta]
+        	[theta] = trainLinearReg(X(1:i, :), y(1:i), lambda);
+
+            error_train = [error_train, linearRegCostFunction(X(1:i, :), y(1:i), theta, 0)];
+
+            error_val = [error_val, linearRegCostFunction(Xval, yval, theta, 0)];
         end
-        % TODO: errors_val & error_train are causing problems... maybe they need to be inverted?
-%       for i = 1:m
-%           % Compute train/cross validation errors using training examples 
-%           % X(1:i, :) and y(1:i), storing the result in 
-%           % error_train(i) and error_val(i)
-%           ....
-%           
-%       end
-%
 
 % ---------------------- Sample Solution ----------------------
 

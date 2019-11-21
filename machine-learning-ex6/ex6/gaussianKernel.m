@@ -17,7 +17,9 @@ sim = 0;
 %
 
 
-
+num = -sum((x1 - x2).^2);
+denom = 2 * sigma^2;
+sim = exp(num/denom);
 
 
 

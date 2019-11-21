@@ -100,8 +100,12 @@ while ~isempty(email_contents)
 
 
 
+    index = find(ismember(vocabList, str));
+    if length(index) == 0
+        continue;
+    end
 
-
+    word_indices = [word_indices, index];
 
 
 

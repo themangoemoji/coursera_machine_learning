@@ -25,7 +25,7 @@ sigma = 0.3;
 
 % Shrink size of X/y to speed up training
 feature_size = size(X, 1);
-percent_removed = 8/9;
+percent_removed = 1/4;
 random_removals = floor(feature_size * percent_removed);
 tempx = X;
 tempy = y;

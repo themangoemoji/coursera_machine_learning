@@ -33,7 +33,7 @@ k = randperm(size(X,1));
 tempx(k(1:random_removals),:) = [];
 tempy(k(1:random_removals),:) = [];
 
-values = [0.001, 0.003, 0.01 0.03 0.1 0.3 1 3 10 30];
+values = [0.01 0.03 0.1 0.3 1 3 10 30 100];
 [vec1, vec2] = meshgrid(values, values);
 combination_errors = [vec1(:), vec2(:)];
 % This is a matrix of C, sigma combination pairs with a space for their error val
@@ -61,7 +61,6 @@ min_error = find(combination_errors(:, 3) == min(errors))(1);
 
 C = combination_errors(min_error, 1);
 sigma = combination_errors(min_error, 2);
-keyboard();
 
 % =========================================================================
 

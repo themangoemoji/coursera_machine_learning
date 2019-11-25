@@ -21,13 +21,16 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+distances = [];
 
+for centroid = 1:size(centroids, 1)
+	new_dist = findDistances(X, centroids(centroid,:));
+	distances = [distances, new_dist];
+end
 
-
-
-
+[min_values, min_index] = min(distances, [], 2);
+idx = min_index;
 
 % =============================================================
-
 end
 

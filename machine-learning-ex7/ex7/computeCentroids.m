@@ -13,8 +13,6 @@ function centroids = computeCentroids(X, idx, K)
 % Useful variables
 [m n] = size(X);
 
-% You need to return the following variables correctly.
-centroids = zeros(K, n);
 
 
 % ====================== YOUR CODE HERE ======================
@@ -26,11 +24,15 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+centroid_means = [];
+
+for centroid = 1:K
+	% Compute the position of each new centroid
+	centroid_means = [centroid_means; mean(X(find(idx==centroid), :))];
+end
 
 
-
-
-
+centroids = centroid_means;
 
 
 % =============================================================

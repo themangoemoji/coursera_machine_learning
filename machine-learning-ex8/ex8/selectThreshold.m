@@ -24,22 +24,18 @@ for epsilon = min(pval):stepsize:max(pval)
     %       of 0's and 1's of the outlier predictions
 
 
-
     cvPrediction = pval < epsilon;
+    
     % Define False Positive, False Negative, True Positive, True Negative (fp, fn, tp, tn)
     fp = sum((cvPrediction == 1) & (yval == 0));
     fn = sum((cvPrediction == 0) & (yval == 1));
-
     tp = sum((cvPrediction == 1) & (yval == 1));
     tn = sum((cvPrediction == 0) & (yval == 0));
     
     precision = (tp) / (tp + fp);
     recall = (tp) / (tp + fn);
 
-
     F1 = (2 * precision * recall) / (precision + recall);
-
-
 
 
     % =============================================================

@@ -40,12 +40,9 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
-
-
-
-
-
-
+err = (X * Theta' - Y);
+relevant_error = err(R==1); 
+J = sum(relevant_error .^ 2) * 0.5;
 
 
 

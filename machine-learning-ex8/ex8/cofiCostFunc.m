@@ -43,14 +43,17 @@ Theta_grad = zeros(size(Theta));
 err = (X * Theta' - Y);
 relevant_error = err(R==1); 
 J = sum(relevant_error .^ 2) * 0.5;
+regularized_theta = lambda * sum(sum(Theta .^ 2)) * .5;
+regularized_X = lambda * sum(sum(X .^ 2)) * .5;
+J += regularized_theta + regularized_X;
 
+Theta_grad = (err .* R)' * X;
+regularized_theta_grad = lambda * Theta;
+Theta_grad += regularized_theta_grad;
 
-
-
-
-
-
-
+X_grad = (err .* R) * Theta;
+regularized_X_grad = lambda * X;
+X_grad += regularized_X_grad;
 
 % =============================================================
 
